@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+
+  influencers  Influencer[]
+  salesRecords SalesRecord[]
+}
+
+model Influencer {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name           String
+  instagramHandle String?
+  email          String?
+  notes          String?
+
+  status String @default("waiting") // active | waiting | success | failure
+
+  addedAt    DateTime  @default(now())
+  repliedAt  DateTime?
+  completedAt DateTime?
+
+  posts InfluencerPost[]
+}
+
+model InfluencerPost {
+  id           String   @id @default(cuid())
+  influencerId String
+  influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+
+  postUrl  String?
+  postedAt DateTime?
+
+  stats PostStats?
+}
+
+model PostStats {
+  id     String   @id @default(cuid())
+  postId String   @unique
+  post   InfluencerPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  likes    Int      @default(0)
+  comments Int      @default(0)
+  shares   Int?
+  views    Int?
+  fetchedAt DateTime @default(now())
+}
+
+model SalesRecord {
+  id     String   @id @default(cuid())
+  userId String
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  amount Decimal  @db.Decimal(10, 2)
+  date   DateTime
+  notes  String?
+}
