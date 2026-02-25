@@ -25,5 +25,5 @@ export async function login(email: string, password: string) {
 }
 
 function sign(userId: string, email: string) {
-  return jwt.sign({ userId, email }, secret, { expiresIn });
+  return jwt.sign({ userId, email }, secret, { expiresIn } as jwt.SignOptions);
 }
