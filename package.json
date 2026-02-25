@@ -11,7 +11,10 @@
     "build:client": "cd client && npm run build",
     "db:generate": "cd server && npx prisma generate",
     "db:migrate": "cd server && npx prisma migrate dev",
-    "db:push": "cd server && npx prisma db push"
+    "db:push": "cd server && npx prisma db push",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm run test",
+    "test:client": "cd client && npm run test"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
