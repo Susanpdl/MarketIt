@@ -1,7 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const secret = process.env.JWT_SECRET || "fallback-dev-secret";
+function getJwtSecret(): string {
+  const s = process.env.JWT_SECRET;
+  if (!s) throw new Error("JWT_SECRET environment variable is required");
+  return s;
+}
+const secret = getJwtSecret();
 
 export interface AuthPayload {
   userId: string;
@@ -15,7 +20,7 @@ export function authMiddleware(req: Request & { user?: AuthPayload }, res: Respo
     return res.status(401).json({ error: "Unauthorized" });
   }
   try {
-    const decoded = jwt.verify(token, secret) as AuthPayload;
+    const decoded = jwt.verify(token, secret) as unknown as AuthPayload;
     req.user = decoded;
     next();
   } catch {

@@ -1,0 +1,87 @@
+{
+  "name": "MarketIt - Influencer Reply Listener",
+  "nodes": [
+    {
+      "parameters": {
+        "mailbox": "INBOX",
+        "options": {
+          "allowUnauthorizedCerts": false
+        }
+      },
+      "id": "email-trigger",
+      "name": "Email Trigger (IMAP)",
+      "type": "n8n-nodes-base.emailTrigger",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  const json = item.json;\n  let email = '';\n  let replyContent = '';\n\n  const from = json.from?.value?.[0]?.address || json.from?.text || json.from;\n  if (typeof from === 'string') {\n    const match = from.match(/<([^>]+)>/);\n    email = match ? match[1].trim() : from.trim();\n  }\n\n  if (json.text) {\n    replyContent = json.text;\n  } else if (json.textPlain) {\n    replyContent = json.textPlain;\n  } else if (json.body?.text) {\n    replyContent = json.body.text;\n  }\n\n  if (email) {\n    results.push({ json: { email, replyContent: replyContent || undefined } });\n  }\n}\n\nreturn results;"
+      },
+      "id": "code-extract",
+      "name": "Extract Sender & Body",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://host.docker.internal:3001/api/webhooks/n8n-influencer-reply",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer REPLACE_WITH_N8N_WEBHOOK_SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ email: $json.email, status: 'active', replyContent: $json.replyContent || '' }) }}",
+        "options": {}
+      },
+      "id": "http-marketit",
+      "name": "Update MarketIt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [690, 300]
+    }
+  ],
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Extract Sender & Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Sender & Body": {
+      "main": [
+        [
+          {
+            "node": "Update MarketIt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-01T00:00:00.000Z",
+  "versionId": "1"
+}

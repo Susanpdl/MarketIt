@@ -1,9 +1,12 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-const secret = process.env.JWT_SECRET || "fallback-dev-secret";
+import { prisma } from "../lib/prisma.js";
+function getJwtSecret(): string {
+  const s = process.env.JWT_SECRET;
+  if (!s) throw new Error("JWT_SECRET environment variable is required");
+  return s;
+}
+const secret = getJwtSecret();
 const expiresIn = process.env.JWT_EXPIRES_IN || "7d";
 
 export async function register(email: string, password: string, name?: string) {

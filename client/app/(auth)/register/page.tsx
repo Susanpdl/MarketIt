@@ -20,7 +20,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       await register(email, password, name || undefined);
-      router.push("/influencers");
+      router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
@@ -29,8 +29,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="card">
-      <h1 style={{ marginBottom: "1.5rem" }}>Sign up</h1>
+    <div className="card card-elevated animate-slide-up" style={{ maxWidth: 400, width: "100%" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
+        <span style={{ fontSize: "2rem" }}>📦</span>
+        <h1 style={{ fontSize: "1.5rem", margin: 0, fontWeight: 600 }}>Sign up</h1>
+      </div>
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <div>
           <label className="label">Name (optional)</label>
@@ -39,6 +42,7 @@ export default function RegisterPage() {
             className="input"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoComplete="name"
           />
         </div>
         <div>
@@ -49,6 +53,7 @@ export default function RegisterPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="email"
           />
         </div>
         <div>
@@ -60,14 +65,18 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
+            autoComplete="new-password"
           />
+          <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.25rem", display: "block" }}>
+            At least 6 characters
+          </span>
         </div>
-        {error && <p style={{ color: "#f87171", fontSize: "0.9rem" }}>{error}</p>}
-        <button type="submit" className="btn" disabled={loading} style={{ width: "100%" }}>
+        {error && <p style={{ color: "var(--error)", fontSize: "0.9rem" }}>{error}</p>}
+        <button type="submit" className="btn" disabled={loading} style={{ width: "100%", padding: "0.75rem" }}>
           {loading ? "Creating account..." : "Sign up"}
         </button>
       </form>
-      <p style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#888" }}>
+      <p style={{ marginTop: "1.25rem", fontSize: "0.9rem", color: "var(--text-secondary)" }}>
         Have an account? <Link href="/login">Log in</Link>
       </p>
     </div>

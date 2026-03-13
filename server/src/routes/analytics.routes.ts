@@ -11,6 +11,7 @@ router.get("/:influencerId", async (req, res) => {
     const data = await analyticsService.getInfluencerAnalytics(req.params.influencerId, userId);
     res.json(data);
   } catch (e) {
+    console.error("GET /analytics/:influencerId error:", e);
     res.status(404).json({ error: "Influencer not found" });
   }
 });
@@ -27,6 +28,7 @@ router.put("/post/:postId/stats", async (req, res) => {
     });
     res.json(data);
   } catch (e) {
+    console.error("PUT /analytics/post/:postId/stats error:", e);
     res.status(400).json({ error: e instanceof Error ? e.message : "Update failed" });
   }
 });

@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma.js";
 
 export async function getInfluencerAnalytics(influencerId: string, userId: string) {
   const inf = await prisma.influencer.findFirst({

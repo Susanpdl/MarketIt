@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma.js";
 
 export async function getSalesOverTime(userId: string, from?: Date, to?: Date) {
   const where: { userId: string; date?: { gte?: Date; lte?: Date } } = { userId };

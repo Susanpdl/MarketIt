@@ -14,7 +14,9 @@
     "db:push": "cd server && npx prisma db push",
     "test": "npm run test:server && npm run test:client",
     "test:server": "cd server && npm run test",
-    "test:client": "cd client && npm run test"
+    "test:client": "cd client && npm run test",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

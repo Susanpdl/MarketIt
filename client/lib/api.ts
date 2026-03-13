@@ -21,8 +21,8 @@ export async function api<T>(
     headers,
     ...(data ? { body: JSON.stringify(data) } : {}),
   });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(json.error || "Request failed");
+  const json = res.status === 204 ? {} : await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error((json as { error?: string }).error || "Request failed");
   return json as T;
 }
 
@@ -30,3 +30,4 @@ export const apiGet = <T>(path: string) => api<T>(path, { method: "GET" });
 export const apiPost = <T>(path: string, data: unknown) => api<T>(path, { method: "POST", data });
 export const apiPatch = <T>(path: string, data: unknown) => api<T>(path, { method: "PATCH", data });
 export const apiPut = <T>(path: string, data: unknown) => api<T>(path, { method: "PUT", data });
+export const apiDelete = (path: string) => api<void>(path, { method: "DELETE" });

@@ -1,0 +1,17 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: marketit-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      N8N_BASIC_AUTH_ACTIVE: "false"
+      # Use host.docker.internal so n8n (in Docker) can call MarketIt (on host)
+      N8N_HOST: "localhost"
+      N8N_EMAIL_FROM: "susanpdl77@gmail.com"
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:

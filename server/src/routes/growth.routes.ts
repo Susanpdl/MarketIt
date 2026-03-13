@@ -13,6 +13,7 @@ router.get("/sales", async (req, res) => {
     const data = await growthService.getSalesOverTime(userId, from, to);
     res.json(data);
   } catch (e) {
+    console.error("GET /growth/sales error:", e);
     res.status(500).json({ error: "Failed to fetch sales" });
   }
 });
@@ -23,6 +24,7 @@ router.get("/markers", async (req, res) => {
     const data = await growthService.getSuccessMarkers(userId);
     res.json(data);
   } catch (e) {
+    console.error("GET /growth/markers error:", e);
     res.status(500).json({ error: "Failed to fetch markers" });
   }
 });
