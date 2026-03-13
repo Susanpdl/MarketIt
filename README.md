@@ -4,10 +4,11 @@ A lightweight app for small businesses to track influencer campaigns, view post 
 
 ## Tech Stack
 
-- **Frontend:** Next.js 14 (App Router)
-- **Backend:** Node.js + Express
+- **Frontend:** Next.js 14 (App Router), React, TypeScript
+- **Backend:** Node.js, Express, TypeScript
 - **Database:** PostgreSQL with Prisma ORM
 - **Auth:** JWT
+- **Automation:** n8n (Docker) for outreach emails and reply detection
 
 ## Setup
 
@@ -59,6 +60,16 @@ npm run dev:server   # Backend only
 npm run dev:client   # Frontend only
 ```
 
+### 4. Email automation (optional)
+
+To send outreach emails when influencers are added and detect replies:
+
+```bash
+docker compose up -d    # Starts n8n on http://localhost:5678
+```
+
+Then import the workflows from `n8n-workflows/` and configure SMTP. See [n8n Setup](docs/N8N_SETUP.md) for details.
+
 ## Features
 
 1. **Influencers** – Add influencers and organize them into:
@@ -67,9 +78,21 @@ npm run dev:client   # Frontend only
    - Past Success (posted as requested)
    - Past Failure (did not reach out or broke)
 
-2. **Analytics** – Per-influencer post stats (likes, comments, views). Stats refresh every 30s. Update manually since Instagram API access is limited.
+2. **Email automation** – When you add an influencer with an email, n8n can automatically send a partnership outreach email. Optionally poll your inbox to detect replies and update status.
 
-3. **Growth** – Sales-over-time chart with success markers showing when each influencer posted.
+3. **Analytics** – Per-influencer post stats (likes, comments, views). Stats refresh every 30s. Update manually since Instagram API access is limited.
+
+4. **Growth** – Sales-over-time chart with success markers showing when each influencer posted.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start API + client concurrently |
+| `npm run build` | Build server and client |
+| `npm run test` | Run server and client tests |
+| `npm run db:push` | Push Prisma schema to database |
+| `npm run docker:up` | Start n8n via Docker Compose |
 
 ## Environment Variables
 
@@ -79,3 +102,10 @@ npm run dev:client   # Frontend only
 | `JWT_SECRET` | Secret for signing JWTs |
 | `JWT_EXPIRES_IN` | Token expiry (default: 7d) |
 | `NEXT_PUBLIC_API_URL` | API base URL (client-side, default: http://localhost:3001) |
+| `N8N_WEBHOOK_URL` | n8n webhook URL for influencer-created events (server) |
+| `N8N_WEBHOOK_SECRET` | Secret for n8n callback authentication (server) |
+
+## Documentation
+
+- [n8n Setup](docs/N8N_SETUP.md) — Email automation with n8n
+- [Midterm Report](docs/MIDTERM_REPORT.md) — CSCI 411/412 Senior Seminar midterm assessment

@@ -3,7 +3,7 @@
 **Student:** Spoudel  
 **Course:** CSCI 411/412 — Senior Seminar 2  
 **Project Title:** MarketIt — Influencer Campaign Tracker for Small Businesses  
-**GitHub Repository:** *(add your GitHub link here)*  
+**GitHub Repository:** [https://github.com/Susanpdl/MarketIt](https://github.com/Susanpdl/MarketIt)  
 **Last Updated:** February 25, 2026
 
 ---
@@ -417,7 +417,7 @@ const [salesRes, markersRes] = await Promise.all([
 
 ## 4. GitHub Repository
 
-> **Repository Link:** *(add your GitHub URL here)*
+> **Repository Link:** [https://github.com/Susanpdl/MarketIt](https://github.com/Susanpdl/MarketIt)
 
 ### Repository Structure
 
