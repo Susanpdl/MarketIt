@@ -108,4 +108,3 @@ Then import the workflows from `n8n-workflows/` and configure SMTP. See [n8n Set
 ## Documentation
 
 - [n8n Setup](docs/N8N_SETUP.md) — Email automation with n8n
-- [Midterm Report](docs/MIDTERM_REPORT.md) — CSCI 411/412 Senior Seminar midterm assessment
