@@ -1,13 +1,7 @@
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className="center"
-      style={{
-        background: "linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)",
-        padding: "2rem",
-      }}
-    >
-      <div style={{ width: "100%", maxWidth: 420 }}>{children}</div>
+    <div className="center min-h-screen bg-[#f5f5f7] p-8">
+      <div className="w-full max-w-[420px]">{children}</div>
     </div>
   );
 }

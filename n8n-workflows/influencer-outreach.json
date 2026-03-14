@@ -27,7 +27,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "={{ $env.N8N_EMAIL_FROM || 'noreply@yourdomain.com' }}",
+        "fromEmail": "MarketIt Team <susanpdl77@gmail.com>",
         "toEmail": "={{ $json.to }}",
         "subject": "={{ $json.subject }}",
         "emailType": "text",

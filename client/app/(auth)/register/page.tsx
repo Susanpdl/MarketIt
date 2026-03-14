@@ -29,12 +29,12 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="card card-elevated animate-slide-up" style={{ maxWidth: 400, width: "100%" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        <span style={{ fontSize: "2rem" }}>📦</span>
-        <h1 style={{ fontSize: "1.5rem", margin: 0, fontWeight: 600 }}>Sign up</h1>
+    <div className="card card-elevated animate-slide-up w-full max-w-[400px] p-8">
+      <div className="flex items-center gap-3 mb-6">
+        <span className="text-3xl">📦</span>
+        <h1 className="text-2xl font-semibold m-0">Sign up</h1>
       </div>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <div>
           <label className="label">Name (optional)</label>
           <input
@@ -67,17 +67,15 @@ export default function RegisterPage() {
             minLength={6}
             autoComplete="new-password"
           />
-          <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.25rem", display: "block" }}>
-            At least 6 characters
-          </span>
+          <span className="text-xs text-[var(--text-muted)] mt-1 block">At least 6 characters</span>
         </div>
-        {error && <p style={{ color: "var(--error)", fontSize: "0.9rem" }}>{error}</p>}
-        <button type="submit" className="btn" disabled={loading} style={{ width: "100%", padding: "0.75rem" }}>
+        {error && <p className="text-error text-sm">{error}</p>}
+        <button type="submit" className="btn btn-primary w-full py-3 btn-interactive" disabled={loading}>
           {loading ? "Creating account..." : "Sign up"}
         </button>
       </form>
-      <p style={{ marginTop: "1.25rem", fontSize: "0.9rem", color: "var(--text-secondary)" }}>
-        Have an account? <Link href="/login">Log in</Link>
+      <p className="mt-6 text-sm text-[var(--text-secondary)]">
+        Have an account? <Link href="/login" className="link-accent">Log in</Link>
       </p>
     </div>
   );

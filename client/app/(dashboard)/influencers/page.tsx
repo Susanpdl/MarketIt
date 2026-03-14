@@ -64,38 +64,36 @@ export default function InfluencersPage() {
   if (loading) {
     return (
       <div className="animate-fade-in">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-          <div className="skeleton" style={{ height: 32, width: 180 }} />
-          <div className="skeleton" style={{ height: 40, width: 140 }} />
+        <div className="flex justify-between items-center mb-6">
+          <div className="skeleton h-8 w-44 rounded-xl" />
+          <div className="skeleton h-10 w-36 rounded-xl" />
         </div>
-        <div className="skeleton" style={{ height: 200, borderRadius: "var(--radius-lg)" }} />
+        <div className="skeleton h-48 rounded-2xl" />
       </div>
     );
   }
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
-        <h1 style={{ fontSize: "1.5rem", margin: 0, fontWeight: 600 }}>Influencers</h1>
-        <button className="btn" onClick={() => setShowAdd(true)}>
+      <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
+        <h1 className="text-2xl font-semibold m-0 text-primary">Influencers</h1>
+        <button className="btn btn-primary btn-interactive" onClick={() => setShowAdd(true)}>
           + Add influencer
         </button>
       </div>
 
-      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+      <div className="flex gap-3 mb-6 flex-wrap">
         <input
           type="search"
-          className="input"
+          className="input max-w-[320px]"
           placeholder="Search by name, handle, or email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ maxWidth: 320 }}
         />
         <select
-          className="input"
+          className="input w-auto min-w-[140px]"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          style={{ width: "auto", minWidth: 140 }}
         >
           <option value="all">All statuses</option>
           <option value="waiting">Waiting</option>

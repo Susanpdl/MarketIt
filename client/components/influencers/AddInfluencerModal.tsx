@@ -38,21 +38,12 @@ export function AddInfluencerModal({ onClose, onAdded }: Props) {
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 100,
-        backdropFilter: "blur(4px)",
-      }}
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
-      <div className="card card-elevated" style={{ maxWidth: 420, width: "90%", margin: "1rem" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "1.25rem", fontSize: "1.25rem" }}>Add influencer</h2>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+      <div className="card card-elevated max-w-[420px] w-[90%] m-4 p-6 rounded-2xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-5 text-xl font-semibold">Add influencer</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="label">Name *</label>
             <input className="input" value={name} onChange={(e) => setName(e.target.value)} required placeholder="Influencer name" />
@@ -76,12 +67,12 @@ export function AddInfluencerModal({ onClose, onAdded }: Props) {
               placeholder="Campaign details, deal terms, etc."
             />
           </div>
-          {error && <p style={{ color: "var(--error)", fontSize: "0.9rem" }}>{error}</p>}
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-            <button type="submit" className="btn" disabled={loading}>
+          {error && <p className="text-error text-sm">{error}</p>}
+          <div className="flex gap-3 mt-2">
+            <button type="submit" className="btn btn-primary btn-interactive" disabled={loading}>
               {loading ? "Adding..." : "Add influencer"}
             </button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button type="button" className="btn btn-secondary btn-interactive" onClick={onClose}>
               Cancel
             </button>
           </div>

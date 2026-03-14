@@ -41,17 +41,17 @@ export default function AnalyticsPage() {
   if (loading && !data) {
     return (
       <div className="animate-fade-in">
-        <div className="skeleton" style={{ height: 24, width: 200, marginBottom: "1rem" }} />
-        <div className="skeleton" style={{ height: 120, borderRadius: "var(--radius-lg)" }} />
+        <div className="skeleton h-6 w-48 mb-4 rounded-xl" />
+        <div className="skeleton h-28 rounded-2xl" />
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="card">
-        <p style={{ color: "var(--error)", marginBottom: "1rem" }}>{error || "Influencer not found"}</p>
-        <Link href="/influencers" className="btn btn-secondary">
+      <div className="card p-6">
+        <p className="text-error mb-4">{error || "Influencer not found"}</p>
+        <Link href="/influencers" className="btn btn-secondary btn-interactive">
           ← Back to Influencers
         </Link>
       </div>
@@ -60,37 +60,37 @@ export default function AnalyticsPage() {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
+      <div className="flex justify-between items-start flex-wrap gap-4 mb-6">
         <div>
-          <Link href="/influencers" style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "0.5rem", display: "inline-block" }}>
+          <Link href="/influencers" className="text-sm mb-2 inline-block link-secondary-to-accent">
             ← Back to Influencers
           </Link>
-          <h1 style={{ fontSize: "1.5rem", margin: "0.5rem 0 0", fontWeight: 600 }}>
+          <h1 className="text-2xl font-semibold mt-2 m-0">
             {data.name}
             {data.instagramHandle && (
-              <span style={{ color: "var(--text-secondary)", marginLeft: "0.5rem", fontWeight: 400 }}>@{data.instagramHandle}</span>
+              <span className="text-secondary ml-2 font-normal">@{data.instagramHandle}</span>
             )}
           </h1>
         </div>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <button type="button" className="btn btn-secondary btn-sm" onClick={() => setShowEmailModal(true)}>
+        <div className="flex gap-2">
+          <button type="button" className="btn btn-secondary btn-sm btn-interactive" onClick={() => setShowEmailModal(true)}>
             View email
           </button>
-          <button className="btn btn-sm" onClick={() => setShowAddPost(true)}>
+          <button className="btn btn-primary btn-sm btn-interactive" onClick={() => setShowAddPost(true)}>
             + Add post
           </button>
         </div>
       </div>
 
       {data.posts.length === 0 ? (
-        <div className="card card-elevated" style={{ padding: "2rem", textAlign: "center" }}>
-          <p style={{ color: "var(--text-secondary)", margin: "0 0 1rem" }}>No posts yet for this influencer.</p>
-          <button className="btn" onClick={() => setShowAddPost(true)}>
+        <div className="card card-elevated p-8 text-center">
+          <p className="text-secondary mb-4">No posts yet for this influencer.</p>
+          <button className="btn btn-primary btn-interactive" onClick={() => setShowAddPost(true)}>
             Add first post
           </button>
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        <div className="flex flex-col gap-3">
           {data.posts.map((post) => (
             <PostCard key={post.id} post={post} influencerId={id} onUpdate={fetchData} />
           ))}
@@ -140,42 +140,42 @@ function PostCard({ post, influencerId, onUpdate }: { post: Post; influencerId: 
   }
 
   return (
-    <div className="card animate-slide-up">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.75rem" }}>
+    <div className="card animate-slide-up transition-all hover-scale-sm">
+      <div className="flex justify-between items-start flex-wrap gap-3">
         <div>
           {post.postUrl ? (
-            <a href={post.postUrl} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 500, fontSize: "1rem" }}>
+            <a href={post.postUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-base link-accent">
               View post ↗
             </a>
           ) : (
-            <span style={{ color: "var(--text-muted)" }}>Post</span>
+            <span className="text-muted">Post</span>
           )}
           {post.postedAt && (
-            <span style={{ color: "var(--text-muted)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
+            <span className="text-muted ml-2 text-sm">
               {new Date(post.postedAt).toLocaleDateString()}
             </span>
           )}
         </div>
         {!editing ? (
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", fontSize: "0.9rem", color: "var(--text-secondary)" }}>
+          <div className="flex items-center gap-4 text-sm text-secondary">
             <span>👍 {post.stats?.likes ?? 0}</span>
             <span>💬 {post.stats?.comments ?? 0}</span>
             {post.stats?.shares != null && <span>🔁 {post.stats.shares}</span>}
             {post.stats?.views != null && <span>👁 {post.stats.views}</span>}
-            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setEditing(true)}>
+            <button type="button" className="btn btn-ghost btn-sm btn-interactive" onClick={() => setEditing(true)}>
               Edit stats
             </button>
           </div>
         ) : (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
-            <input type="number" min={0} className="input" style={{ width: 70 }} placeholder="Likes" value={likes || ""} onChange={(e) => setLikes(Number(e.target.value) || 0)} />
-            <input type="number" min={0} className="input" style={{ width: 70 }} placeholder="Comments" value={comments || ""} onChange={(e) => setComments(Number(e.target.value) || 0)} />
-            <input type="number" min={0} className="input" style={{ width: 70 }} placeholder="Shares" value={shares || ""} onChange={(e) => setShares(Number(e.target.value) || 0)} />
-            <input type="number" min={0} className="input" style={{ width: 70 }} placeholder="Views" value={views || ""} onChange={(e) => setViews(Number(e.target.value) || 0)} />
-            <button type="button" className="btn btn-sm" onClick={handleSaveStats} disabled={saving}>
+          <div className="flex flex-wrap gap-2 items-center">
+            <input type="number" min={0} className="input w-16" placeholder="Likes" value={likes || ""} onChange={(e) => setLikes(Number(e.target.value) || 0)} />
+            <input type="number" min={0} className="input w-16" placeholder="Comments" value={comments || ""} onChange={(e) => setComments(Number(e.target.value) || 0)} />
+            <input type="number" min={0} className="input w-16" placeholder="Shares" value={shares || ""} onChange={(e) => setShares(Number(e.target.value) || 0)} />
+            <input type="number" min={0} className="input w-16" placeholder="Views" value={views || ""} onChange={(e) => setViews(Number(e.target.value) || 0)} />
+            <button type="button" className="btn btn-sm btn-primary btn-interactive" onClick={handleSaveStats} disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
-            <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(false)}>
+            <button type="button" className="btn btn-secondary btn-sm btn-interactive" onClick={() => setEditing(false)}>
               Cancel
             </button>
           </div>
@@ -206,31 +206,22 @@ function AddPostModal({ influencerId, onClose, onAdded }: { influencerId: string
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 100,
-        backdropFilter: "blur(4px)",
-      }}
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
-      <div className="card card-elevated" style={{ maxWidth: 400, width: "90%", margin: "1rem" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "1rem" }}>Add post</h2>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      <div className="card card-elevated max-w-[400px] w-[90%] m-4 p-6 rounded-2xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-4 text-lg font-semibold">Add post</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="label">Post URL (optional)</label>
             <input className="input" type="url" placeholder="https://instagram.com/p/..." value={postUrl} onChange={(e) => setPostUrl(e.target.value)} />
           </div>
-          {error && <p style={{ color: "var(--error)", fontSize: "0.9rem" }}>{error}</p>}
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            <button type="submit" className="btn" disabled={loading}>
+          {error && <p className="text-error text-sm">{error}</p>}
+          <div className="flex gap-3">
+            <button type="submit" className="btn btn-primary btn-interactive" disabled={loading}>
               {loading ? "Adding..." : "Add post"}
             </button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button type="button" className="btn btn-secondary btn-interactive" onClick={onClose}>
               Cancel
             </button>
           </div>

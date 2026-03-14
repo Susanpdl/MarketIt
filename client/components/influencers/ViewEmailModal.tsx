@@ -32,35 +32,25 @@ export function ViewEmailModal({ influencerId, influencerName, onClose }: Props)
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 100,
-        backdropFilter: "blur(4px)",
-      }}
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
       <div
-        className="card card-elevated"
-        style={{ maxWidth: 560, width: "90%", maxHeight: "85vh", margin: "1rem", display: "flex", flexDirection: "column", overflow: "hidden" }}
+        className="card card-elevated max-w-[560px] w-[90%] max-h-85vh m-4 p-6 flex flex-col overflow-hidden rounded-2xl shadow-clay-lg animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexShrink: 0 }}>
-          <h2 style={{ margin: 0, fontSize: "1.2rem" }}>Email - {data?.name ?? influencerName ?? "Influencer"}</h2>
-          <button type="button" className="btn btn-ghost btn-sm" onClick={onClose}>
+        <div className="flex justify-between items-center mb-4 flex-shrink-0">
+          <h2 className="m-0 text-lg font-semibold">Email - {data?.name ?? influencerName ?? "Influencer"}</h2>
+          <button type="button" className="btn btn-ghost btn-sm btn-interactive" onClick={onClose}>
             Close
           </button>
         </div>
 
-        <div style={{ overflow: "auto", flex: 1, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="overflow-auto flex-1 flex flex-col gap-5">
           {loading ? (
-            <div className="skeleton" style={{ height: 120, borderRadius: "var(--radius-md)" }} />
+            <div className="skeleton h-28 rounded-xl" />
           ) : !hasContent ? (
-            <p style={{ color: "var(--text-muted)", margin: 0 }}>
+            <p className="text-muted m-0">
               {data?.email
                 ? "No email content stored yet. The outreach email will appear here once sent via n8n."
                 : "No email address for this influencer."}
@@ -69,38 +59,16 @@ export function ViewEmailModal({ influencerId, influencerName, onClose }: Props)
             <>
               {data.outreachEmailContent && (
                 <div>
-                  <h3 style={{ fontSize: "0.9rem", color: "var(--text-secondary)", marginBottom: "0.5rem", fontWeight: 600 }}>Outreach email</h3>
-                  <pre
-                    style={{
-                      background: "var(--bg-primary)",
-                      padding: "1rem",
-                      borderRadius: "var(--radius-md)",
-                      fontSize: "0.875rem",
-                      whiteSpace: "pre-wrap",
-                      wordBreak: "break-word",
-                      margin: 0,
-                      border: "1px solid var(--border-subtle)",
-                    }}
-                  >
+                  <h3 className="text-sm text-secondary mb-2 font-semibold">Outreach email</h3>
+                  <pre className="bg-secondary p-4 rounded-xl text-sm whitespace-pre-wrap break-words m-0 shadow-clay-inset">
                     {data.outreachEmailContent}
                   </pre>
                 </div>
               )}
               {data.replyEmailContent && (
                 <div>
-                  <h3 style={{ fontSize: "0.9rem", color: "var(--text-secondary)", marginBottom: "0.5rem", fontWeight: 600 }}>Reply</h3>
-                  <pre
-                    style={{
-                      background: "var(--bg-primary)",
-                      padding: "1rem",
-                      borderRadius: "var(--radius-md)",
-                      fontSize: "0.875rem",
-                      whiteSpace: "pre-wrap",
-                      wordBreak: "break-word",
-                      margin: 0,
-                      border: "1px solid var(--border-subtle)",
-                    }}
-                  >
+                  <h3 className="text-sm text-secondary mb-2 font-semibold">Reply</h3>
+                  <pre className="bg-secondary p-4 rounded-xl text-sm whitespace-pre-wrap break-words m-0 shadow-clay-inset">
                     {data.replyEmailContent}
                   </pre>
                 </div>

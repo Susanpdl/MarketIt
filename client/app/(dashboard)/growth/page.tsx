@@ -50,34 +50,34 @@ export default function GrowthPage() {
   if (loading) {
     return (
       <div className="animate-fade-in">
-        <div className="skeleton" style={{ height: 32, width: 120, marginBottom: "1rem" }} />
-        <div className="skeleton" style={{ height: 300, borderRadius: "var(--radius-lg)" }} />
+        <div className="skeleton h-8 w-28 mb-4 rounded-xl" />
+        <div className="skeleton h-72 rounded-2xl" />
       </div>
     );
   }
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
-        <h1 style={{ fontSize: "1.5rem", margin: 0, fontWeight: 600 }}>Growth</h1>
-        <button className="btn" onClick={() => setShowAdd(true)}>
+      <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
+        <h1 className="text-2xl font-semibold m-0 text-primary">Growth</h1>
+        <button className="btn btn-primary btn-interactive" onClick={() => setShowAdd(true)}>
           + Add sales record
         </button>
       </div>
-      <p style={{ color: "var(--text-secondary)", marginBottom: "1.5rem", fontSize: "0.9375rem" }}>
+      <p className="text-secondary mb-6 text-[0.9375rem]">
         Sales over time. Green markers show when successful influencers posted.
       </p>
 
       {chartData.length === 0 ? (
-        <div className="card card-elevated" style={{ padding: "2rem", textAlign: "center", marginBottom: "1.5rem" }}>
-          <p style={{ color: "var(--text-secondary)", margin: "0 0 1rem" }}>No sales data yet. Add a record to see the growth chart.</p>
-          <button className="btn" onClick={() => setShowAdd(true)}>
+        <div className="card card-elevated p-8 text-center mb-6">
+          <p className="text-secondary mb-4">No sales data yet. Add a record to see the growth chart.</p>
+          <button className="btn btn-primary btn-interactive" onClick={() => setShowAdd(true)}>
             Add first record
           </button>
         </div>
       ) : (
-        <div className="card card-elevated" style={{ padding: "1.5rem", marginBottom: "1.5rem" }}>
-          <div style={{ height: 320 }}>
+        <div className="card card-elevated p-6 mb-6">
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 24, left: 0, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-default)" />
@@ -105,14 +105,14 @@ export default function GrowthPage() {
       )}
 
       {markers.length > 0 && (
-        <div className="card" style={{ marginBottom: "1.5rem" }}>
-          <h3 style={{ marginBottom: "0.75rem", fontSize: "1rem" }}>Success markers</h3>
-          <ul style={{ margin: 0, paddingLeft: "1.25rem", color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+        <div className="card mb-6">
+          <h3 className="mb-3 text-base font-semibold">Success markers</h3>
+          <ul className="m-0 pl-5 text-secondary text-sm list-disc">
             {markers.map((m) => (
-              <li key={m.date + m.influencerName} style={{ marginBottom: "0.25rem" }}>
+              <li key={m.date + m.influencerName} className="mb-1">
                 {m.date}: {m.influencerName}
                 {m.postUrl && (
-                  <a href={m.postUrl} target="_blank" rel="noopener noreferrer" style={{ marginLeft: "0.5rem", fontSize: "0.85rem" }}>
+                  <a href={m.postUrl} target="_blank" rel="noopener noreferrer" className="ml-2 text-sm link-accent">
                     View post
                   </a>
                 )}
@@ -124,8 +124,8 @@ export default function GrowthPage() {
 
       {salesRecords.length > 0 && (
         <div className="card">
-          <h3 style={{ marginBottom: "1rem", fontSize: "1rem" }}>Sales records</h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <h3 className="mb-4 text-base font-semibold">Sales records</h3>
+          <div className="flex flex-col gap-2">
             {salesRecords.map((r) => (
               <SalesRecordRow key={r.id} record={r} onUpdate={fetchData} />
             ))}
@@ -171,14 +171,14 @@ function SalesRecordRow({ record, onUpdate }: { record: SalesRecord; onUpdate: (
 
   if (editing) {
     return (
-      <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap", padding: "0.75rem", background: "var(--bg-primary)", borderRadius: "var(--radius-md)" }}>
-        <input type="number" step="0.01" className="input" style={{ width: 100 }} value={amount} onChange={(e) => setAmount(e.target.value)} />
-        <input type="date" className="input" style={{ width: 140 }} value={date} onChange={(e) => setDate(e.target.value)} />
-        <input className="input" style={{ flex: 1, minWidth: 120 }} placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
-        <button type="button" className="btn btn-sm" onClick={handleSave} disabled={saving}>
+      <div className="flex gap-3 items-center flex-wrap p-4 bg-secondary rounded-xl shadow-clay-inset">
+        <input type="number" step="0.01" className="input w-24" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        <input type="date" className="input w-36" value={date} onChange={(e) => setDate(e.target.value)} />
+        <input className="input flex-1 min-w-[120px]" placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
+        <button type="button" className="btn btn-sm btn-primary btn-interactive" onClick={handleSave} disabled={saving}>
           {saving ? "Saving..." : "Save"}
         </button>
-        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(false)}>
+        <button type="button" className="btn btn-secondary btn-sm btn-interactive" onClick={() => setEditing(false)}>
           Cancel
         </button>
       </div>
@@ -186,27 +186,27 @@ function SalesRecordRow({ record, onUpdate }: { record: SalesRecord; onUpdate: (
   }
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.75rem", background: "var(--bg-primary)", borderRadius: "var(--radius-md)", flexWrap: "wrap", gap: "0.5rem" }}>
+    <div className="flex justify-between items-center p-4 bg-secondary rounded-xl shadow-clay-sm flex-wrap gap-2">
       <div>
-        <span style={{ fontWeight: 600, color: "var(--success)" }}>{"$" + Number(record.amount).toLocaleString()}</span>
-        <span style={{ color: "var(--text-muted)", marginLeft: "0.5rem", fontSize: "0.9rem" }}>{record.date.slice(0, 10)}</span>
-        {record.notes && <span style={{ color: "var(--text-secondary)", marginLeft: "0.5rem", fontSize: "0.85rem" }}> - {record.notes}</span>}
+        <span className="font-semibold text-success">{"$" + Number(record.amount).toLocaleString()}</span>
+        <span className="text-[var(--text-muted)] ml-2 text-sm">{record.date.slice(0, 10)}</span>
+        {record.notes && <span className="text-secondary ml-2 text-sm"> - {record.notes}</span>}
       </div>
-      <div style={{ display: "flex", gap: "0.5rem" }}>
-        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setEditing(true)}>
+      <div className="flex gap-2">
+        <button type="button" className="btn btn-ghost btn-sm btn-interactive" onClick={() => setEditing(true)}>
           Edit
         </button>
         {!showDeleteConfirm ? (
-          <button type="button" className="btn btn-ghost btn-sm btn-danger" onClick={() => setShowDeleteConfirm(true)}>
+          <button type="button" className="btn btn-ghost btn-sm btn-danger btn-interactive" onClick={() => setShowDeleteConfirm(true)}>
             Delete
           </button>
         ) : (
           <>
-            <span style={{ fontSize: "0.85rem", color: "var(--error)" }}>Delete?</span>
-            <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete} disabled={deleting}>
+            <span className="text-sm text-error">Delete?</span>
+            <button type="button" className="btn btn-sm btn-danger btn-interactive" onClick={handleDelete} disabled={deleting}>
               {deleting ? "..." : "Yes"}
             </button>
-            <button type="button" className="btn btn-secondary btn-sm" onClick={() => setShowDeleteConfirm(false)} disabled={deleting}>
+            <button type="button" className="btn btn-secondary btn-sm btn-interactive" onClick={() => setShowDeleteConfirm(false)} disabled={deleting}>
               No
             </button>
           </>
@@ -240,21 +240,12 @@ function AddSalesModal({ onClose, onAdded }: { onClose: () => void; onAdded: () 
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 100,
-        backdropFilter: "blur(4px)",
-      }}
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
-      <div className="card card-elevated" style={{ maxWidth: 400, width: "90%", margin: "1rem" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "1rem" }}>Add sales record</h2>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      <div className="card card-elevated max-w-[400px] w-[90%] m-4 p-6 rounded-2xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-4 text-lg font-semibold">Add sales record</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="label">Amount</label>
             <input type="number" step="0.01" className="input" value={amount} onChange={(e) => setAmount(e.target.value)} required />
@@ -267,12 +258,12 @@ function AddSalesModal({ onClose, onAdded }: { onClose: () => void; onAdded: () 
             <label className="label">Notes (optional)</label>
             <input className="input" value={notes} onChange={(e) => setNotes(e.target.value)} />
           </div>
-          {error && <p style={{ color: "var(--error)", fontSize: "0.9rem" }}>{error}</p>}
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-            <button type="submit" className="btn" disabled={loading}>
+          {error && <p className="text-error text-sm">{error}</p>}
+          <div className="flex gap-3 mt-2">
+            <button type="submit" className="btn btn-primary btn-interactive" disabled={loading}>
               {loading ? "Adding..." : "Add"}
             </button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button type="button" className="btn btn-secondary btn-interactive" onClick={onClose}>
               Cancel
             </button>
           </div>

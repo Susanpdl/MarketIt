@@ -67,21 +67,20 @@ export function InfluencerCard({ influencer, onStatusChange, onDelete, onEdit }:
   }
 
   return (
-    <div className="card animate-slide-up" style={{ marginBottom: "0.75rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem" }}>
+    <div className="card animate-slide-up mb-4 transition-all hover-scale-sm">
+      <div className="flex justify-between items-start flex-wrap gap-2">
         <div>
-          <strong style={{ fontSize: "1.05rem" }}>{influencer.name}</strong>
+          <strong className="text-[1.05rem]">{influencer.name}</strong>
           {influencer.instagramHandle && (
-            <span style={{ color: "var(--text-secondary)", marginLeft: "0.5rem" }}>@{influencer.instagramHandle}</span>
+            <span className="text-secondary ml-2">@{influencer.instagramHandle}</span>
           )}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <div className="flex items-center gap-2">
           <select
             value={status}
             onChange={handleStatusChange}
             disabled={updating}
-            className="input"
-            style={{ width: "auto", padding: "0.35rem 0.6rem", fontSize: "0.8125rem", minWidth: 110 }}
+            className="input w-auto py-2 px-3 text-sm min-w-[110px]"
           >
             <option value="waiting">Waiting</option>
             <option value="active">Active</option>
@@ -90,61 +89,57 @@ export function InfluencerCard({ influencer, onStatusChange, onDelete, onEdit }:
           </select>
           <button
             type="button"
-            className="btn btn-ghost btn-icon"
+            className="btn btn-ghost btn-icon p-2 btn-interactive-sm"
             onClick={() => setShowEmailModal(true)}
             title="View email"
-            style={{ padding: "0.4rem" }}
           >
             ✉️
           </button>
           <button
             type="button"
-            className="btn btn-ghost btn-icon"
+            className="btn btn-ghost btn-icon p-2 btn-interactive-sm"
             onClick={() => setShowEditModal(true)}
             title="Edit influencer"
-            style={{ padding: "0.4rem" }}
           >
             ✏️
           </button>
           <button
             type="button"
-            className="btn btn-ghost btn-icon btn-danger"
+            className="btn btn-ghost btn-icon btn-danger p-2 btn-interactive-sm"
             onClick={() => setShowDeleteConfirm(true)}
             disabled={deleting}
             title="Delete influencer"
-            style={{ padding: "0.4rem" }}
           >
             🗑
           </button>
         </div>
       </div>
       {showDeleteConfirm && (
-        <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "var(--error-muted)", borderRadius: "var(--radius-md)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem", flexWrap: "wrap" }}>
-          <span style={{ fontSize: "0.875rem", color: "var(--error)" }}>Delete this influencer?</span>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete} disabled={deleting}>
+        <div className="mt-4 p-4 bg-error-muted rounded-xl flex items-center justify-between gap-2 flex-wrap shadow-clay-inset">
+          <span className="text-sm text-error">Delete this influencer?</span>
+          <div className="flex gap-2">
+            <button type="button" className="btn btn-sm btn-danger btn-interactive" onClick={handleDelete} disabled={deleting}>
               {deleting ? "Deleting..." : "Delete"}
             </button>
-            <button type="button" className="btn btn-sm btn-secondary" onClick={() => setShowDeleteConfirm(false)} disabled={deleting}>
+            <button type="button" className="btn btn-sm btn-secondary btn-interactive" onClick={() => setShowDeleteConfirm(false)} disabled={deleting}>
               Cancel
             </button>
           </div>
         </div>
       )}
-      {error && <p style={{ color: "var(--error)", fontSize: "0.85rem", margin: "0.5rem 0 0" }}>{error}</p>}
-      {influencer.email && <p style={{ margin: "0.25rem 0 0", fontSize: "0.9rem", color: "var(--text-secondary)" }}>{influencer.email}</p>}
-      <p style={{ margin: "0.5rem 0 0", fontSize: "0.85rem", color: "var(--text-muted)" }}>
+      {error && <p className="text-[var(--error)] text-sm mt-2">{error}</p>}
+      {influencer.email && <p className="mt-1 text-sm text-secondary">{influencer.email}</p>}
+      <p className="mt-2 text-85 text-muted">
         Added {new Date(influencer.addedAt).toLocaleDateString()}
         {influencer.posts.length > 0 && ` • ${influencer.posts.length} post(s)`}
       </p>
-      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem", flexWrap: "wrap" }}>
-        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setShowEmailModal(true)}>
+      <div className="flex gap-2 mt-4 flex-wrap">
+        <button type="button" className="btn btn-ghost btn-sm btn-interactive" onClick={() => setShowEmailModal(true)}>
           View email
         </button>
         <Link
           href={`/analytics/${influencer.id}`}
-          className="btn btn-secondary btn-sm"
-          style={{ display: "inline-flex", fontSize: "0.85rem" }}
+          className="btn btn-secondary btn-sm inline-flex text-sm btn-interactive"
         >
           View analytics →
         </Link>

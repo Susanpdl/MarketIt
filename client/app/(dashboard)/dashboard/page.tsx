@@ -40,15 +40,15 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="animate-fade-in">
-        <div style={{ marginBottom: "2rem" }}>
-          <div className="skeleton" style={{ height: 32, width: 200, marginBottom: "0.5rem" }} />
-          <div className="skeleton" style={{ height: 20, width: 320 }} />
+        <div className="mb-8">
+          <div className="skeleton h-8 w-48 mb-2 rounded-xl" />
+          <div className="skeleton h-5 w-80 rounded-lg" />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="card" style={{ padding: "1.5rem" }}>
-              <div className="skeleton" style={{ height: 20, width: "60%", marginBottom: "0.5rem" }} />
-              <div className="skeleton" style={{ height: 36, width: "40%" }} />
+            <div key={i} className="card p-6">
+              <div className="skeleton h-5 w-3/5 mb-2 rounded-lg" />
+              <div className="skeleton h-9 w-2/5 rounded-xl" />
             </div>
           ))}
         </div>
@@ -60,14 +60,14 @@ export default function DashboardPage() {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 600, margin: 0 }}>Dashboard</h1>
-        <p style={{ color: "var(--text-secondary)", marginTop: "0.25rem", fontSize: "0.9375rem" }}>
+      <div className="mb-8">
+        <h1 className="text-2xl font-semibold m-0 text-primary">Dashboard</h1>
+        <p className="text-secondary mt-1 text-[0.9375rem]">
           Overview of your influencer campaigns and sales performance
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 mb-8">
         <StatCard
           title="Total Influencers"
           value={s.totalInfluencers}
@@ -94,39 +94,48 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
-        <div className="card card-elevated" style={{ padding: "1.5rem" }}>
-          <h2 style={{ fontSize: "1.1rem", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="card card-elevated p-6">
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <span>💰</span>
             <span>Recent Sales</span>
-            <Link href="/growth" style={{ marginLeft: "auto", fontSize: "0.875rem", fontWeight: 400 }}>View all</Link>
+            <Link href="/growth" className="ml-auto text-sm font-normal link-accent">View all</Link>
           </h2>
           {s.recentSales.length === 0 ? (
-            <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>No sales yet. Add records from the Growth page.</p>
+            <p className="text-muted text-sm">No sales yet. Add records from the Growth page.</p>
           ) : (
-            <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+            <ul className="m-0 p-0 list-none">
               {s.recentSales.map((r, i) => (
-                <li key={i} style={{ display: "flex", justifyContent: "space-between", padding: "0.5rem 0", borderBottom: "1px solid var(--border-subtle)" }}>
-                  <span style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>{r.date}</span>
-                  <span style={{ fontWeight: 600, color: "var(--success)" }}>${r.amount.toLocaleString()}</span>
+                <li key={i} className="flex justify-between items-center py-3 border-b border-subtle gap-2">
+                  <span className="text-secondary text-sm flex items-center gap-2">
+                    <span>📅</span>
+                    {r.date}
+                  </span>
+                  <span className="font-semibold text-success flex items-center gap-1">
+                    <span>💵</span>
+                    ${r.amount.toLocaleString()}
+                  </span>
                 </li>
               ))}
             </ul>
           )}
         </div>
 
-        <div className="card card-elevated" style={{ padding: "1.5rem" }}>
-          <h2 style={{ fontSize: "1.1rem", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <div className="card card-elevated p-6">
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <span>👥</span>
             <span>Recent Influencers</span>
-            <Link href="/influencers" style={{ marginLeft: "auto", fontSize: "0.875rem", fontWeight: 400 }}>View all</Link>
+            <Link href="/influencers" className="ml-auto text-sm font-normal link-accent">View all</Link>
           </h2>
           {s.recentInfluencers.length === 0 ? (
-            <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>No influencers yet. Add your first from the Influencers page.</p>
+            <p className="text-muted text-sm">No influencers yet. Add your first from the Influencers page.</p>
           ) : (
-            <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+            <ul className="m-0 p-0 list-none">
               {s.recentInfluencers.map((r) => (
-                <li key={r.id} style={{ padding: "0.5rem 0", borderBottom: "1px solid var(--border-subtle)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem", flexWrap: "wrap" }}>
-                  <Link href={`/analytics/${r.id}`} style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none", color: "inherit", flex: 1, minWidth: 0 }}>
-                    <span style={{ fontWeight: 500 }}>{r.name}</span>
+                <li key={r.id} className="py-3 border-b border-subtle flex items-center justify-between gap-2 flex-wrap">
+                  <Link href={`/analytics/${r.id}`} className="flex items-center gap-2 no-underline text-inherit flex-1 min-w-0">
+                    <span>👤</span>
+                    <span className="font-medium">{r.name}</span>
                     <span className={`badge badge-${r.status}`}>{r.status}</span>
                   </Link>
                   <button type="button" className="btn btn-ghost btn-sm" onClick={() => setViewEmailFor({ id: r.id, name: r.name })}>
@@ -163,18 +172,18 @@ function StatCard({
   href?: string;
 }) {
   const content = (
-    <div className="card card-elevated" style={{ padding: "1.25rem", transition: "transform 0.2s" }}>
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-        <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)", fontWeight: 500 }}>{title}</span>
-        <span style={{ fontSize: "1.5rem" }}>{icon}</span>
+    <div className="card card-elevated p-5 transition-all duration-250">
+      <div className="flex items-start justify-between mb-2">
+        <span className="text-sm text-secondary font-medium">{title}</span>
+        <span className="text-2xl">{icon}</span>
       </div>
-      <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)" }}>{value}</div>
-      {suffix && <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>{suffix}</div>}
+      <div className="text-2xl font-bold text-primary">{value}</div>
+      {suffix && <div className="text-xs text-muted mt-1">{suffix}</div>}
     </div>
   );
   if (href) {
     return (
-      <Link href={href} style={{ textDecoration: "none", color: "inherit" }}>
+      <Link href={href} className="no-underline text-inherit">
         {content}
       </Link>
     );

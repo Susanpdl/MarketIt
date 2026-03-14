@@ -17,45 +17,34 @@ export default function Home() {
 
   if (loading || user) {
     return (
-      <div className="center" style={{ background: "var(--bg-primary)" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-          <div className="skeleton" style={{ width: 64, height: 64, borderRadius: "var(--radius-lg)" }} />
-          <div className="skeleton" style={{ width: 160, height: 24 }} />
+      <div className="center min-h-screen bg-[#f5f5f7]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="skeleton w-16 h-16 rounded-2xl" />
+          <div className="skeleton w-40 h-6 rounded-lg" />
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
-        textAlign: "center",
-      }}
-    >
-      <div className="animate-slide-up" style={{ maxWidth: 520 }}>
-        <div style={{ fontSize: "3.5rem", marginBottom: "1rem" }}>📦</div>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: 700, margin: 0, letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+    <div className="min-h-screen bg-[#f5f5f7] flex flex-col items-center justify-center p-8 text-center">
+      <div className="animate-slide-up max-w-[520px]">
+        <div className="text-5xl mb-4">📦</div>
+        <h1 className="text-4xl font-bold m-0 tracking-tight leading-tight text-primary">
           MarketIt
         </h1>
-        <p style={{ color: "var(--text-secondary)", fontSize: "1.125rem", marginTop: "0.75rem", lineHeight: 1.6 }}>
+        <p className="text-secondary text-lg mt-3 leading-relaxed">
           Track your influencer campaigns, measure growth, and see which partnerships drive real results.
         </p>
-        <div style={{ display: "flex", gap: "1rem", marginTop: "2rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/login" className="btn" style={{ padding: "0.75rem 1.5rem", fontSize: "1rem" }}>
+        <div className="flex gap-4 mt-8 justify-center flex-wrap">
+          <Link href="/login" className="btn btn-primary py-3 px-6 text-base btn-interactive">
             Log in
           </Link>
-          <Link href="/register" className="btn btn-secondary" style={{ padding: "0.75rem 1.5rem", fontSize: "1rem" }}>
+          <Link href="/register" className="btn btn-secondary py-3 px-6 text-base btn-interactive">
             Sign up free
           </Link>
         </div>
-        <div style={{ display: "flex", gap: "2rem", marginTop: "3rem", justifyContent: "center", flexWrap: "wrap", color: "var(--text-muted)", fontSize: "0.9rem" }}>
+        <div className="flex gap-8 mt-12 justify-center flex-wrap text-muted text-sm">
           <span>👥 Manage influencers</span>
           <span>📈 Track sales growth</span>
           <span>📊 View analytics</span>
