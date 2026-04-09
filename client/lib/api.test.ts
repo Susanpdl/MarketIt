@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "./api";
+import { apiGet, apiPost, apiPatch, apiDelete } from "./api";
 
 describe("api", () => {
   const mockFetch = jest.fn();
@@ -77,5 +77,30 @@ describe("api", () => {
     });
 
     await expect(apiGet("/api/fail")).rejects.toThrow("Request failed");
+  });
+
+  it("apiPatch sends PATCH with JSON body", async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ ok: true }),
+    });
+
+    await apiPatch("/api/items/1", { name: "Updated" });
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        method: "PATCH",
+        body: JSON.stringify({ name: "Updated" }),
+      })
+    );
+  });
+
+  it("apiDelete sends DELETE", async () => {
+    const json = jest.fn();
+    mockFetch.mockResolvedValueOnce({ ok: true, status: 204, json });
+
+    await apiDelete("/api/items/1");
+    expect(mockFetch).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({ method: "DELETE" }));
+    expect(json).not.toHaveBeenCalled();
   });
 });
