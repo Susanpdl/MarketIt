@@ -92,8 +92,9 @@ export async function updateStatusByEmail(email: string, status: InfluencerStatu
 }
 
 export async function setOutreachEmail(influencerId: string, emailContent: string) {
-  await prisma.influencer.updateMany({
+  const result = await prisma.influencer.updateMany({
     where: { id: influencerId },
     data: { outreachEmailContent: emailContent },
   });
+  if (result.count === 0) throw new Error("Influencer not found");
 }

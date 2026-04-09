@@ -59,12 +59,12 @@ export default function GrowthPage() {
   return (
     <div className="animate-fade-in">
       <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
-        <h1 className="text-2xl font-semibold m-0 text-primary">Growth</h1>
+        <h1 className="text-2xl font-normal m-0 text-primary tracking-tight">Growth</h1>
         <button className="btn btn-primary btn-interactive" onClick={() => setShowAdd(true)}>
           + Add sales record
         </button>
       </div>
-      <p className="text-secondary mb-6 text-[0.9375rem]">
+      <p className="text-secondary mb-6 text-9375">
         Sales over time. Green markers show when successful influencers posted.
       </p>
 
@@ -81,11 +81,11 @@ export default function GrowthPage() {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 24, left: 0, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-default)" />
-                <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={12} />
-                <YAxis stroke="var(--text-muted)" fontSize={12} tickFormatter={(v) => `$${v}`} />
+                <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={12} tick={{ style: { fontVariantNumeric: "tabular-nums" } }} />
+                <YAxis stroke="var(--text-muted)" fontSize={12} tick={{ style: { fontVariantNumeric: "tabular-nums" } }} tickFormatter={(v) => `$${v}`} />
                 <Tooltip
                   contentStyle={{ background: "var(--bg-tertiary)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-md)" }}
-                  labelStyle={{ color: "var(--text-primary)" }}
+                  labelStyle={{ color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}
                   formatter={(value: number) => [`$${value.toLocaleString()}`, "Amount"]}
                 />
                 <Line type="monotone" dataKey="amount" stroke="var(--accent)" strokeWidth={2} dot={{ fill: "var(--accent)" }} />
@@ -106,7 +106,7 @@ export default function GrowthPage() {
 
       {markers.length > 0 && (
         <div className="card mb-6">
-          <h3 className="mb-3 text-base font-semibold">Success markers</h3>
+          <h3 className="mb-3 text-base font-normal tracking-tight">Success markers</h3>
           <ul className="m-0 pl-5 text-secondary text-sm list-disc">
             {markers.map((m) => (
               <li key={m.date + m.influencerName} className="mb-1">
@@ -124,7 +124,7 @@ export default function GrowthPage() {
 
       {salesRecords.length > 0 && (
         <div className="card">
-          <h3 className="mb-4 text-base font-semibold">Sales records</h3>
+          <h3 className="mb-4 text-base font-normal tracking-tight">Sales records</h3>
           <div className="flex flex-col gap-2">
             {salesRecords.map((r) => (
               <SalesRecordRow key={r.id} record={r} onUpdate={fetchData} />
@@ -171,7 +171,7 @@ function SalesRecordRow({ record, onUpdate }: { record: SalesRecord; onUpdate: (
 
   if (editing) {
     return (
-      <div className="flex gap-3 items-center flex-wrap p-4 bg-secondary rounded-xl shadow-clay-inset">
+      <div className="flex gap-3 items-center flex-wrap p-4 bg-secondary rounded-lg shadow-clay-inset">
         <input type="number" step="0.01" className="input w-24" value={amount} onChange={(e) => setAmount(e.target.value)} />
         <input type="date" className="input w-36" value={date} onChange={(e) => setDate(e.target.value)} />
         <input className="input flex-1 min-w-[120px]" placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
@@ -186,10 +186,10 @@ function SalesRecordRow({ record, onUpdate }: { record: SalesRecord; onUpdate: (
   }
 
   return (
-    <div className="flex justify-between items-center p-4 bg-secondary rounded-xl shadow-clay-sm flex-wrap gap-2">
+    <div className="flex justify-between items-center p-4 bg-secondary rounded-lg shadow-clay-sm flex-wrap gap-2">
       <div>
-        <span className="font-semibold text-success">{"$" + Number(record.amount).toLocaleString()}</span>
-        <span className="text-[var(--text-muted)] ml-2 text-sm">{record.date.slice(0, 10)}</span>
+        <span className="font-medium text-success tnum">{"$" + Number(record.amount).toLocaleString()}</span>
+        <span className="text-muted ml-2 text-sm tnum">{record.date.slice(0, 10)}</span>
         {record.notes && <span className="text-secondary ml-2 text-sm"> - {record.notes}</span>}
       </div>
       <div className="flex gap-2">
@@ -243,8 +243,8 @@ function AddSalesModal({ onClose, onAdded }: { onClose: () => void; onAdded: () 
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
-      <div className="card card-elevated max-w-[400px] w-[90%] m-4 p-6 rounded-2xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
-        <h2 className="mb-4 text-lg font-semibold">Add sales record</h2>
+      <div className="card card-elevated max-w-[400px] w-90 m-4 p-6 rounded-xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-4 text-lg font-normal tracking-tight">Add sales record</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="label">Amount</label>

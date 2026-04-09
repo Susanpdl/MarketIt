@@ -1,9 +1,9 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import * as influencerService from "../services/influencer.service.js";
 
 const router = Router();
 
-function n8nAuth(req: Request, res: Response, next: () => void) {
+function n8nAuth(req: Request, res: Response, next: NextFunction) {
   const secret = process.env.N8N_WEBHOOK_SECRET;
   if (!secret) {
     console.warn("N8N_WEBHOOK_SECRET not set - webhook auth disabled");

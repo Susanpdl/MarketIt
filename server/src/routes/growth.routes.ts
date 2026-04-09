@@ -8,8 +8,16 @@ router.use(authMiddleware);
 router.get("/sales", async (req, res) => {
   try {
     const userId = req.user!.userId;
-    const from = req.query.from ? new Date(req.query.from as string) : undefined;
-    const to = req.query.to ? new Date(req.query.to as string) : undefined;
+    let from: Date | undefined;
+    let to: Date | undefined;
+    if (req.query.from) {
+      from = new Date(req.query.from as string);
+      if (isNaN(from.getTime())) return res.status(400).json({ error: "Invalid 'from' date" });
+    }
+    if (req.query.to) {
+      to = new Date(req.query.to as string);
+      if (isNaN(to.getTime())) return res.status(400).json({ error: "Invalid 'to' date" });
+    }
     const data = await growthService.getSalesOverTime(userId, from, to);
     res.json(data);
   } catch (e) {

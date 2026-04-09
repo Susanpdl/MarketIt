@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { authRoutes } from "./routes/auth.routes.js";
 import { dashboardRoutes } from "./routes/dashboard.routes.js";
@@ -39,3 +39,8 @@ app.use("/api/sales", salesRoutes);
 app.use("/api/webhooks", webhookRoutes);
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "Internal server error" });
+});

@@ -12,7 +12,10 @@ router.get("/:influencerId", async (req, res) => {
     res.json(data);
   } catch (e) {
     console.error("GET /analytics/:influencerId error:", e);
-    res.status(404).json({ error: "Influencer not found" });
+    if (e instanceof Error && e.message === "Influencer not found") {
+      return res.status(404).json({ error: "Influencer not found" });
+    }
+    res.status(500).json({ error: "Failed to fetch analytics" });
   }
 });
 

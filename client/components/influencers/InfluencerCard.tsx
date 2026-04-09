@@ -70,7 +70,7 @@ export function InfluencerCard({ influencer, onStatusChange, onDelete, onEdit }:
     <div className="card animate-slide-up mb-4 transition-all hover-scale-sm">
       <div className="flex justify-between items-start flex-wrap gap-2">
         <div>
-          <strong className="text-[1.05rem]">{influencer.name}</strong>
+          <strong className="text-105 font-normal tracking-tight">{influencer.name}</strong>
           {influencer.instagramHandle && (
             <span className="text-secondary ml-2">@{influencer.instagramHandle}</span>
           )}
@@ -80,7 +80,7 @@ export function InfluencerCard({ influencer, onStatusChange, onDelete, onEdit }:
             value={status}
             onChange={handleStatusChange}
             disabled={updating}
-            className="input w-auto py-2 px-3 text-sm min-w-[110px]"
+            className="input w-auto py-2 px-3 text-sm min-w-110"
           >
             <option value="waiting">Waiting</option>
             <option value="active">Active</option>
@@ -115,7 +115,7 @@ export function InfluencerCard({ influencer, onStatusChange, onDelete, onEdit }:
         </div>
       </div>
       {showDeleteConfirm && (
-        <div className="mt-4 p-4 bg-error-muted rounded-xl flex items-center justify-between gap-2 flex-wrap shadow-clay-inset">
+        <div className="mt-4 p-4 bg-error-muted rounded-lg flex items-center justify-between gap-2 flex-wrap shadow-clay-inset">
           <span className="text-sm text-error">Delete this influencer?</span>
           <div className="flex gap-2">
             <button type="button" className="btn btn-sm btn-danger btn-interactive" onClick={handleDelete} disabled={deleting}>
@@ -127,7 +127,7 @@ export function InfluencerCard({ influencer, onStatusChange, onDelete, onEdit }:
           </div>
         </div>
       )}
-      {error && <p className="text-[var(--error)] text-sm mt-2">{error}</p>}
+      {error && <p className="text-error text-sm mt-2">{error}</p>}
       {influencer.email && <p className="mt-1 text-sm text-secondary">{influencer.email}</p>}
       <p className="mt-2 text-85 text-muted">
         Added {new Date(influencer.addedAt).toLocaleDateString()}

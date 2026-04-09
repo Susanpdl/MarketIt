@@ -41,11 +41,11 @@ export function AddInfluencerModal({ onClose, onAdded }: Props) {
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
-      <div className="card card-elevated max-w-[420px] w-[90%] m-4 p-6 rounded-2xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
-        <h2 className="mb-5 text-xl font-semibold">Add influencer</h2>
+      <div className="card card-elevated max-w-[420px] w-90 m-4 p-6 rounded-xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-5 text-xl font-normal tracking-tight">Add influencer</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="label">Name *</label>
+            <label className="label">Name</label>
             <input className="input" value={name} onChange={(e) => setName(e.target.value)} required placeholder="Influencer name" />
           </div>
           <div>

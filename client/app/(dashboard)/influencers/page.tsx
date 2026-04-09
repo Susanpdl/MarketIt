@@ -76,7 +76,7 @@ export default function InfluencersPage() {
   return (
     <div className="animate-fade-in">
       <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
-        <h1 className="text-2xl font-semibold m-0 text-primary">Influencers</h1>
+        <h1 className="text-2xl font-normal m-0 text-primary tracking-tight">Influencers</h1>
         <button className="btn btn-primary btn-interactive" onClick={() => setShowAdd(true)}>
           + Add influencer
         </button>

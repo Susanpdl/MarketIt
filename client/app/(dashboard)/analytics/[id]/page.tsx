@@ -65,7 +65,7 @@ export default function AnalyticsPage() {
           <Link href="/influencers" className="text-sm mb-2 inline-block link-secondary-to-accent">
             ← Back to Influencers
           </Link>
-          <h1 className="text-2xl font-semibold mt-2 m-0">
+          <h1 className="text-2xl font-normal tracking-tight mt-2 m-0">
             {data.name}
             {data.instagramHandle && (
               <span className="text-secondary ml-2 font-normal">@{data.instagramHandle}</span>
@@ -209,8 +209,8 @@ function AddPostModal({ influencerId, onClose, onAdded }: { influencerId: string
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] transition-opacity duration-250"
       onClick={onClose}
     >
-      <div className="card card-elevated max-w-[400px] w-[90%] m-4 p-6 rounded-2xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
-        <h2 className="mb-4 text-lg font-semibold">Add post</h2>
+      <div className="card card-elevated max-w-[400px] w-[90%] m-4 p-6 rounded-xl shadow-clay-lg animate-slide-up" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-4 text-lg font-normal tracking-tight">Add post</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="label">Post URL (optional)</label>

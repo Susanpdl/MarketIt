@@ -23,19 +23,35 @@ function getToken() {
 export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fetchVersion, setFetchVersion] = useState(0);
   const [viewEmailFor, setViewEmailFor] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     const token = getToken();
-    if (!token) return;
+    if (!token) {
+      setStats(null);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
     fetch(`${API_URL}/api/dashboard/stats`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error("Failed")))
-      .then(setStats)
-      .catch(() => setStats(null))
-      .finally(() => setLoading(false));
-  }, []);
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("Failed"))))
+      .then((data) => {
+        if (!cancelled) setStats(data);
+      })
+      .catch(() => {
+        if (!cancelled) setStats(null);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [fetchVersion]);
 
   if (loading) {
     return (
@@ -56,18 +72,49 @@ export default function DashboardPage() {
     );
   }
 
-  const s = stats!;
+  if (!stats) {
+    const token = getToken();
+    return (
+      <div className="animate-fade-in">
+        <div className="mb-8">
+          <h1 className="text-2xl font-normal m-0 text-primary tracking-tight">Dashboard</h1>
+          <p className="text-secondary mt-1 text-[0.9375rem]">
+            {!token
+              ? "Sign in to see your overview."
+              : "We couldn’t load your stats. Make sure the API is running and try again."}
+          </p>
+        </div>
+        <div className="card card-elevated p-8 max-w-md">
+          {token ? (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setFetchVersion((v) => v + 1)}
+            >
+              Retry
+            </button>
+          ) : (
+            <Link href="/login" className="btn btn-primary inline-block text-center no-underline">
+              Go to login
+            </Link>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const s = stats;
 
   return (
     <div className="animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold m-0 text-primary">Dashboard</h1>
+          <h1 className="text-2xl font-normal m-0 text-primary tracking-tight">Dashboard</h1>
         <p className="text-secondary mt-1 text-[0.9375rem]">
           Overview of your influencer campaigns and sales performance
         </p>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 mb-8">
+      <div className="grid grid-auto-220 gap-4 mb-8">
         <StatCard
           title="Total Influencers"
           value={s.totalInfluencers}
@@ -96,7 +143,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card card-elevated p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-normal mb-4 flex items-center gap-2 tracking-tight">
             <span>💰</span>
             <span>Recent Sales</span>
             <Link href="/growth" className="ml-auto text-sm font-normal link-accent">View all</Link>
@@ -104,14 +151,14 @@ export default function DashboardPage() {
           {s.recentSales.length === 0 ? (
             <p className="text-muted text-sm">No sales yet. Add records from the Growth page.</p>
           ) : (
-            <ul className="m-0 p-0 list-none">
+            <ul className="m-0 list-none" style={{ padding: 0 }}>
               {s.recentSales.map((r, i) => (
                 <li key={i} className="flex justify-between items-center py-3 border-b border-subtle gap-2">
                   <span className="text-secondary text-sm flex items-center gap-2">
                     <span>📅</span>
                     {r.date}
                   </span>
-                  <span className="font-semibold text-success flex items-center gap-1">
+                  <span className="font-medium text-success flex items-center gap-1">
                     <span>💵</span>
                     ${r.amount.toLocaleString()}
                   </span>
@@ -122,7 +169,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="card card-elevated p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-normal mb-4 flex items-center gap-2 tracking-tight">
             <span>👥</span>
             <span>Recent Influencers</span>
             <Link href="/influencers" className="ml-auto text-sm font-normal link-accent">View all</Link>
@@ -130,7 +177,7 @@ export default function DashboardPage() {
           {s.recentInfluencers.length === 0 ? (
             <p className="text-muted text-sm">No influencers yet. Add your first from the Influencers page.</p>
           ) : (
-            <ul className="m-0 p-0 list-none">
+            <ul className="m-0 list-none" style={{ padding: 0 }}>
               {s.recentInfluencers.map((r) => (
                 <li key={r.id} className="py-3 border-b border-subtle flex items-center justify-between gap-2 flex-wrap">
                   <Link href={`/analytics/${r.id}`} className="flex items-center gap-2 no-underline text-inherit flex-1 min-w-0">
@@ -177,7 +224,7 @@ function StatCard({
         <span className="text-sm text-secondary font-medium">{title}</span>
         <span className="text-2xl">{icon}</span>
       </div>
-      <div className="text-2xl font-bold text-primary">{value}</div>
+      <div className="text-2xl font-medium text-primary tnum">{value}</div>
       {suffix && <div className="text-xs text-muted mt-1">{suffix}</div>}
     </div>
   );

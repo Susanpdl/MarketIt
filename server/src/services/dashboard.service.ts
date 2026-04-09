@@ -1,7 +1,7 @@
 import { prisma } from "../lib/prisma.js";
 
 export async function getDashboardStats(userId: string) {
-  const [influencers, salesRecords] = await Promise.all([
+  const [influencers, recentSalesRecords, totalSalesAgg] = await Promise.all([
     prisma.influencer.findMany({
       where: { userId },
       select: { status: true },
@@ -10,7 +10,11 @@ export async function getDashboardStats(userId: string) {
       where: { userId },
       select: { amount: true, date: true },
       orderBy: { date: "desc" },
-      take: 12,
+      take: 5,
+    }),
+    prisma.salesRecord.aggregate({
+      where: { userId },
+      _sum: { amount: true },
     }),
   ]);
 
@@ -24,8 +28,8 @@ export async function getDashboardStats(userId: string) {
   const completed = byStatus.success + byStatus.failure;
   const successRate = completed > 0 ? Math.round((byStatus.success / completed) * 100) : 0;
 
-  const totalSales = salesRecords.reduce((sum, r) => sum + Number(r.amount), 0);
-  const recentSales = salesRecords.slice(0, 5).map((r) => ({
+  const totalSales = Number(totalSalesAgg._sum.amount ?? 0);
+  const recentSales = recentSalesRecords.map((r) => ({
     amount: Number(r.amount),
     date: r.date.toISOString().slice(0, 10),
   }));

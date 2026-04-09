@@ -29,9 +29,9 @@ export function InfluencerBlocks({ influencers, refetch }: { influencers: Influe
           <section key={block.id}>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg">{block.icon}</span>
-              <h2 className="text-lg font-semibold m-0">{block.title}</h2>
+              <h2 className="text-lg font-normal tracking-tight m-0">{block.title}</h2>
               {list.length > 0 && (
-                <span className="badge ml-2 bg-elevated text-secondary text-xs shadow-clay-sm">
+                <span className="badge ml-2 bg-elevated text-secondary text-xs tnum">
                   {list.length}
                 </span>
               )}

@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading || !user) {
     return (
-      <div className="center min-h-screen bg-[#f5f5f7]">
+      <div className="center min-h-screen">
         <div className="flex flex-col items-center gap-4">
           <div className="skeleton w-12 h-12 rounded-xl" />
           <div className="skeleton w-28 h-5 rounded-lg" />
@@ -34,11 +34,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="min-h-screen flex bg-[#f5f5f7]">
-      <aside className="w-280 min-h-screen bg-white-80 backdrop-blur-sm py-6 px-5 flex flex-col rounded-r-3xl mr-4">
+    <div className="min-h-screen flex">
+      <aside className="w-280 min-h-screen bg-white-80 backdrop-blur-sm py-6 px-5 flex flex-col rounded-r-3xl mr-4 shadow-clay-sm">
         <Link
           href="/dashboard"
-          className="text-xl font-bold text-primary no-underline mb-8 flex items-center gap-2 transition-opacity"
+          className="text-xl font-normal text-primary no-underline mb-8 flex items-center gap-2 transition-opacity"
         >
           <span className="text-2xl">📦</span>
           MarketIt
@@ -52,8 +52,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 href={item.href}
                 className={`flex items-center gap-3 py-3 px-4 rounded-xl no-underline text-9375 font-medium btn-interactive ${
                   isActive
-                    ? "bg-[var(--accent-muted)] text-accent shadow-clay-inset"
-                    : "text-secondary hover:bg-[var(--bg-hover)] hover:shadow-clay-sm"
+                    ? "nav-link-active"
+                    : "nav-link-inactive"
                 }`}
               >
                 <span className="text-lg">{item.icon}</span>
@@ -69,7 +69,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </button>
         </div>
       </aside>
-      <main className="flex-1 py-8 px-8 max-w-[1100px] mx-auto w-full overflow-auto">
+      <main className="flex-1 py-8 px-8 max-w-1100 mx-auto w-full overflow-auto">
         {children}
       </main>
     </div>

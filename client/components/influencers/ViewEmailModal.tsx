@@ -36,11 +36,11 @@ export function ViewEmailModal({ influencerId, influencerName, onClose }: Props)
       onClick={onClose}
     >
       <div
-        className="card card-elevated max-w-[560px] w-[90%] max-h-85vh m-4 p-6 flex flex-col overflow-hidden rounded-2xl shadow-clay-lg animate-slide-up"
+        className="card card-elevated max-w-[560px] w-90 max-h-85vh m-4 p-6 flex flex-col overflow-hidden rounded-xl shadow-clay-lg animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-4 flex-shrink-0">
-          <h2 className="m-0 text-lg font-semibold">Email - {data?.name ?? influencerName ?? "Influencer"}</h2>
+          <h2 className="m-0 text-lg font-normal tracking-tight">Email - {data?.name ?? influencerName ?? "Influencer"}</h2>
           <button type="button" className="btn btn-ghost btn-sm btn-interactive" onClick={onClose}>
             Close
           </button>
@@ -59,16 +59,16 @@ export function ViewEmailModal({ influencerId, influencerName, onClose }: Props)
             <>
               {data.outreachEmailContent && (
                 <div>
-                  <h3 className="text-sm text-secondary mb-2 font-semibold">Outreach email</h3>
-                  <pre className="bg-secondary p-4 rounded-xl text-sm whitespace-pre-wrap break-words m-0 shadow-clay-inset">
+                  <h3 className="text-sm text-secondary mb-2 font-normal">Outreach email</h3>
+                  <pre className="bg-secondary p-4 rounded-lg text-sm whitespace-pre-wrap break-words m-0 shadow-clay-inset code-block">
                     {data.outreachEmailContent}
                   </pre>
                 </div>
               )}
               {data.replyEmailContent && (
                 <div>
-                  <h3 className="text-sm text-secondary mb-2 font-semibold">Reply</h3>
-                  <pre className="bg-secondary p-4 rounded-xl text-sm whitespace-pre-wrap break-words m-0 shadow-clay-inset">
+                  <h3 className="text-sm text-secondary mb-2 font-normal">Reply</h3>
+                  <pre className="bg-secondary p-4 rounded-lg text-sm whitespace-pre-wrap break-words m-0 shadow-clay-inset code-block">
                     {data.replyEmailContent}
                   </pre>
                 </div>
