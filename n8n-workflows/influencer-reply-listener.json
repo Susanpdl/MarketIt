@@ -4,14 +4,15 @@
     {
       "parameters": {
         "mailbox": "INBOX",
-        "options": {
-          "allowUnauthorizedCerts": false
-        }
+        "postProcessAction": "read",
+        "format": "simple",
+        "downloadAttachments": false,
+        "options": {}
       },
       "id": "email-trigger",
       "name": "Email Trigger (IMAP)",
-      "type": "n8n-nodes-base.emailTrigger",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
       "position": [250, 300],
       "credentials": {}
     },
@@ -29,7 +30,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=http://host.docker.internal:3001/api/webhooks/n8n-influencer-reply",
+        "url": "https://YOUR-RENDER-API.onrender.com/api/webhooks/n8n-influencer-reply",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [

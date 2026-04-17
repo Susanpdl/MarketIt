@@ -1,5 +1,6 @@
 node_modules
 .env
+.env.n8n
 .next/
 .next 2/
 dist

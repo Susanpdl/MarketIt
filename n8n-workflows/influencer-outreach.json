@@ -17,7 +17,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const input = $input.first().json;\nconst body = input.body || input;\nconst name = body.name || 'there';\nconst email = body.email || '';\n\nreturn [{\n  json: {\n    to: email,\n    subject: `Partnership opportunity - ${name}`,\n    text: `Hi ${name},\\n\\nWe'd love to collaborate with you on a campaign. Please reply to this email to let us know if you're interested.\\n\\nBest regards,\\nMarketIt Team`\n  }\n}];"
+        "jsCode": "const input = $input.first().json;\nconst body = input.body || input;\nconst name = body.name || 'there';\nconst email = body.email || '';\nconst influencerId = body.influencerId;\n\nreturn [{\n  json: {\n    influencerId,\n    to: email,\n    subject: `Partnership opportunity - ${name}`,\n    text: `Hi ${name},\\n\\nWe'd love to collaborate with you on a campaign. Please reply to this email to let us know if you're interested.\\n\\nBest regards,\\nMarketIt Team`\n  }\n}];"
       },
       "id": "set-email-data",
       "name": "Prepare Email Data",
@@ -27,11 +27,11 @@
     },
     {
       "parameters": {
-        "fromEmail": "MarketIt Team <susanpdl77@gmail.com>",
+        "fromEmail": "MarketIt Team <your-email@gmail.com>",
         "toEmail": "={{ $json.to }}",
         "subject": "={{ $json.subject }}",
-        "emailType": "text",
-        "message": "={{ $json.text }}",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}",
         "options": {}
       },
       "id": "send-email",
@@ -40,6 +40,34 @@
       "typeVersion": 2.1,
       "position": [690, 300],
       "credentials": {}
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-RENDER-API.onrender.com/api/webhooks/n8n-email-sent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer REPLACE_WITH_N8N_WEBHOOK_SECRET"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ influencerId: $('Prepare Email Data').item.json.influencerId, emailContent: $('Prepare Email Data').item.json.text }) }}",
+        "options": {}
+      },
+      "id": "http-email-sent",
+      "name": "Notify MarketIt (email sent)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [910, 300]
     }
   ],
   "connections": {
@@ -59,6 +87,17 @@
         [
           {
             "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Notify MarketIt (email sent)",
             "type": "main",
             "index": 0
           }

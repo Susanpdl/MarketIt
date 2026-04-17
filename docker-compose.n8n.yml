@@ -1,0 +1,27 @@
+# n8n on the same host as MarketIt (production-oriented).
+# Copy .env.n8n.example -> .env.n8n, fill values, then:
+#   docker compose -f docker-compose.n8n.yml --env-file .env.n8n up -d
+#
+# Bind to 127.0.0.1 only — expose HTTPS via Nginx on a subdomain (e.g. n8n.yourdomain.com).
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: marketit-n8n
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5678:5678"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      N8N_HOST: ${N8N_PUBLIC_HOST}
+      N8N_PROTOCOL: https
+      WEBHOOK_URL: https://${N8N_PUBLIC_HOST}/
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD}
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
