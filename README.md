@@ -148,6 +148,25 @@ Restart the API after changing `server/.env`.
 - **Analytics** — Per-post stats (likes, comments, views); refresh cadence ~30s; manual updates where the Instagram API is limited.
 - **Growth** — Sales-over-time chart with markers when influencers post.
 
+## Student guide: getting a GitHub Foundations voucher
+
+If you are a student and want to take the **GitHub Foundations Certification** for free, use this checklist:
+
+1. **Verify student eligibility**
+   - Join and verify through **GitHub Global Campus**: https://education.github.com/
+   - Make sure your student verification is approved on the same GitHub account you will use for certification.
+
+2. **Check where voucher offers usually appear**
+   - Certifications page: https://skills.github.com/certifications
+   - Copilot Features page (look for education/promotional banners): https://github.com/settings/copilot/features
+   - Global Campus dashboard updates: https://education.github.com/
+
+3. **If no voucher is visible yet**
+   - Re-check with the same signed-in account and look again after 24–48 hours (offers can roll out in batches).
+   - Check your inbox/spam for GitHub Education or certification emails.
+   - Watch the GitHub Skills blog for promo windows: https://skills.github.com/blog
+   - Contact support with your student verification details: https://support.github.com/contact
+
 ## Scripts
 
 | Command | Description |
